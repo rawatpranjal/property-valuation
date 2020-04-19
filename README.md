@@ -1,11 +1,23 @@
 
 # **Introduction**
 
-* One of the most fascinating datasets that I've come across is the Ames Housing dataset. It was originally collated by Dr. Dean De Cock (Truman State Univ) for the undergraduate statistical methods course, and later became very popular through Kaggle.
-* It contains rich information captured at the point of sale of houses in Ames (Iowa, US) from 2006 to 2010. Among others we have the location and various area measurements of the house, the immediate context of sale, the condition of rooms, etc..
-* One of the popular "tasks" on this dataset to try and predict the Sale Price from the attributes of the house - its location, size, quality, etc. But there can be other interesting "tasks".
-* While Kaggle split the data into train and test sets, the original dataset is larger and more complete.
+---
+One of the most fascinating datasets that I've come across is the Ames Housing dataset. It was originally collated by Dr. Dean De Cock (Truman State Univ) for the undergraduate statistical methods course, and later became very popular through Kaggle.
 
+For about 3000 houses sold in Ames City (Iowa, US) between 2006 and 2010, are given the following info: 
+ * Location of the House
+ * House Size and Area Measurements
+ * Furnishing of the House
+ * Subjective Evaluations of House
+ * Immediate Context of Sale
+
+Our objective is to predict and explain the Sale Price of the house based on its location, size, furnishing, quality, context etc.
+
+References:
+ * Author's Introduction: https://tinyurl.com/ycfc58y8
+ * Data Dictionary: http://jse.amstat.org/v19n3/decock/DataDocumentation.txt
+ * Data in Excel: https://tinyurl.com/ycbbw3h7
+---
 
 
 ```
@@ -13,147 +25,34 @@ PATH = '/content/drive/My Drive/Projects/Machine Learning/Real World Problems/Ho
 import pandas as pd
 df = pd.read_excel(PATH)
 df.columns = [i.replace(' ', '') for i in df.columns]
-df[['PID', 'SalePrice', 'Neighborhood', 'GrLivArea', 'YrSold', 'MoSold']].sample(frac = 1).head(10)
+print(df[['PID', 'SalePrice', 'Neighborhood', 'GrLivArea', 'YrSold', 'MoSold']].sample(frac = 1).head(10))
 ```
 
+                PID  SalePrice Neighborhood  GrLivArea  YrSold  MoSold
+    48    528180070     319900      NridgHt       1752    2010       2
+    2408  528186110     310090      NridgHt       1666    2006       6
+    1026  527357110     146900       NWAmes       1308    2008       6
+    1762  528326060     248000      NoRidge       2285    2007       6
+    2628  535456020     141000        NAmes       1150    2006       5
+    1473  907405140     208500      CollgCr       1710    2008       2
+    2061  905106150     129000       Sawyer        894    2007       5
+    1146  531450170     187000      SawyerW       1710    2008       6
+    61    528358010     260400      NoRidge       1720    2010       3
+    979   923228230      88000      MeadowV       1092    2009       8
 
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PID</th>
-      <th>SalePrice</th>
-      <th>Neighborhood</th>
-      <th>GrLivArea</th>
-      <th>YrSold</th>
-      <th>MoSold</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1646</th>
-      <td>527302060</td>
-      <td>176000</td>
-      <td>NWAmes</td>
-      <td>1479</td>
-      <td>2007</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>2912</th>
-      <td>923226150</td>
-      <td>146500</td>
-      <td>Mitchel</td>
-      <td>1652</td>
-      <td>2006</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>2752</th>
-      <td>906380170</td>
-      <td>194000</td>
-      <td>CollgCr</td>
-      <td>1220</td>
-      <td>2006</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>2799</th>
-      <td>907285100</td>
-      <td>237000</td>
-      <td>CollgCr</td>
-      <td>1995</td>
-      <td>2006</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>1517</th>
-      <td>909175050</td>
-      <td>179500</td>
-      <td>SWISU</td>
-      <td>2192</td>
-      <td>2008</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>1559</th>
-      <td>911370410</td>
-      <td>392500</td>
-      <td>Crawfor</td>
-      <td>1652</td>
-      <td>2008</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>1712</th>
-      <td>528172050</td>
-      <td>245700</td>
-      <td>NridgHt</td>
-      <td>1614</td>
-      <td>2007</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>222</th>
-      <td>905105200</td>
-      <td>137900</td>
-      <td>Sawyer</td>
-      <td>892</td>
-      <td>2010</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>619</th>
-      <td>534476320</td>
-      <td>128900</td>
-      <td>NAmes</td>
-      <td>1050</td>
-      <td>2009</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>966</th>
-      <td>916460110</td>
-      <td>170000</td>
-      <td>Timber</td>
-      <td>2014</td>
-      <td>2009</td>
-      <td>2</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-# **The Target: Sale Price in $**
+# **Variable of Interest: Sale Price**
 
 Two observations: 
-1. A majority of houses are sold for less, a minority of houses are sold for a really, really high amount. Sale Price exhibits high left skew, and thus needs to be log-transformed. 
-2. Post log-transformation, we detect outliers by plotting MEAN -+2 STD vertical bars. 
+1. A majority of houses are sold for less, a minority of houses are sold for a really, really high amount. Sale Price exhibits high left skew, and thus needs to be log-transformed. Once done, it appearly nearly normal.
+2. Post log-transformation, we remove outliers outside μ ± 3σ. These examples were aberrations that could mislead. 
 
 
 ```
 import seaborn as sns
 sns.set_style("darkgrid")
 import matplotlib.pyplot as plt
-plt.rcParams["figure.figsize"] = (16,6)
+plt.rcParams["figure.figsize"] = (10,5)
 
 sns.distplot(df.SalePrice, hist=True, kde = False)
 plt.title('Distribution of Sale Price')
@@ -191,7 +90,7 @@ plt.show()
 old_examples = df.shape[0]
 df = df[(df.logSalePrice > μ - 3 * σ) &
         (df.logSalePrice < μ + 3 * σ) & 
-        (df.GrLivArea<4000)]
+        (df.GrLivArea < 4000)]
 new_examples = df.shape[0]
 print(old_examples, new_examples)
 ```
@@ -216,65 +115,122 @@ plt.show()
 ![png](Ames_Housing_files/Ames_Housing_10_0.png)
 
 
-# **Variation of Price by Location**
-* SalePrices vary a lot by Neighbourhood & Section (from PIN)
+# **Factors behind Log Sale Price**
+
+* **Location of the House:** Ordinal attributes telling us the Neighborhood, Postal ID, Zoning allocation.
+* **Size of the House:** Continous attributes which capture Sq Feet Area of the Lot, Living Space, Basement, etc.
+* **Contents of the House:** Mainly count vectors telling us the no. of rooms, furnished items, etc.
+* **Subjective Evaluations:** Subjective Evaluations such as 'Overall Quality' of different aspects.  
+* **Immediate Context of Sale:** The time of year, the mode of payment and relation between seller & buyer.
+* **Variations in Demand:** As proxied by no. of sales conducted before, in the neighborhood. 
+
+
+
+Helper Function 1 - CatPlot
+ * Plots LogSalePrice across Categories, ordered.
+
 
 
 
 ```
-import seaborn as sns
-import matplotlib.pyplot as plt
-def plot_categorical(var):
-    plt.figure(figsize=(16, 6))
-    my_order = df[['SalePrice', var]].groupby(by=var).mean().sort_values('SalePrice').index
-    chart = sns.violinplot(x=var, y='SalePrice', data=df, order=my_order)
-    chart.axhline(y = df.SalePrice.mean(), color='black', linewidth=2) 
+def CatPlot(var):
+    my_order = df[['logSalePrice', var]].groupby(by=var).mean().sort_values('logSalePrice').index
+    chart = sns.violinplot(x=var, y='logSalePrice', data=df, order=my_order)
+    chart.axhline(y = df.logSalePrice.mean(), color='black', linewidth=2) 
     chart.set_xticklabels(chart.get_xticklabels(), rotation=45, horizontalalignment='right',fontweight='light',fontsize='x-large')
-    return chart
+    plt.title(f'Distribution of logSalePrice with {var}')
+    plt.show()
+```
 
+Helper Function 2 - Neural Net Regression
+* NNReg = Neural Net Regression between LogSalePrice and Selected Variables.
+* Numericals get standardized and Categoricals get dummified. 
+
+
+```
 from sklearn.neural_network import MLPRegressor
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-def regression_model(var, return_weights = False):
-    x, y = pd.get_dummies(df[var]), df.SalePrice
+from warnings import filterwarnings
+filterwarnings('ignore')
+def NNReg(var, alpha = 2, yhat_and_y = False):
+    y = df.logSalePrice
+    x = df[var].copy()
+    for i in x.select_dtypes(exclude = 'object'):
+        ε = 0.0000001
+        x[i] = (x[i]-x[i].mean(axis = 0)+ε)/(x[i].std(axis = 0)+ε)
+    for i in x.select_dtypes(include = 'object').columns:
+        x = pd.concat([x, pd.get_dummies(x[i])], axis = 1)
+        x = x.drop(i, axis = 1)
     x_train, x_val, y_train, y_val = train_test_split(x, y, test_size = 0.3, random_state = 42)
-    
-    model = MLPRegressor(hidden_layer_sizes=(20,), alpha = 2, learning_rate_init=0.01, max_iter=1000, random_state = 42)
+
+    N_h1, N_h2 = round(x_train.shape[1] * 1.5), round(x_train.shape[1] * 0.5)
+    model = MLPRegressor(hidden_layer_sizes = (N_h1, N_h2), alpha = alpha, max_iter = 500, random_state = 42, verbose = False)
     model.fit(x_train, y_train)
-    if return_weights == True:
-        return model.coefs_
-    print(r2_score(y_train, model.predict(x_train)), r2_score(y_val, model.predict(x_val)))
+    yhat = model.predict(x_train)
+    print(f'Train: {r2_score(y_train, yhat):0.3f}')
+    print(f'Test: {r2_score(y_val, model.predict(x_val)):0.3f}')
 
-    plt.figure(figsize=(16, 6))
-    plt.plot(y_train, y_train)
-    plt.scatter(y_train, model.predict(x_train))
-    plt.show()
-
+    if yhat_and_y == True: 
+        plt.figure(figsize=(16, 6))
+        plt.plot(y_val, y_val, c = 'black', linestyle = '--', label = 'Perfect Prediction')
+        plt.scatter(model.predict(x_val), y_val, marker='.', label = 'Current Prediction')
+        plt.title('Regression Model for logSalePrice')
+        plt.ylabel('True Values')
+        plt.xlabel('Predictions')
+        plt.legend()
+        plt.show()
+    
+    return model
 ```
 
-
-```
-plot_categorical('MSZoning')
-regression_model('MSZoning')
-```
+# **Variation of Sale Price by Location** 
 
 
-```
-df['Zone'] = df.MSZoning.astype(str) + '~' + df.MSSubClass.astype(str)
-plot_categorical('Zone')
-regression_model('Zone')
-```
-
-
-```
-plot_categorical('Neighborhood')
-regression_model('Neighborhood')
-```
+* Sale Price varies a lot by Neighborhood. 
+* The following is a map of Ames' Neighborhoods 
 
 
 ```
-df.PID = df.PID.astype(str) # Postal Identification Number
+PATH = '/content/drive/My Drive/Projects/Machine Learning/Real World Problems/Housing Prices/house-prices-advanced-regression-techniques/nbor.png'
+from PIL import Image  
+Image.open(PATH)
+```
+
+
+
+
+![png](Ames_Housing_files/Ames_Housing_18_0.png)
+
+
+
+
+```
+plt.rcParams["figure.figsize"] = (15,3)
+CatPlot('Neighborhood')
+```
+
+
+![png](Ames_Housing_files/Ames_Housing_19_0.png)
+
+
+* Sale Price is higher in Residential zones (more so in low density 'L') and floating villages (FV) and lower in Agricultural/Industrial zones
+
+
+```
+CatPlot('MSZoning')
+```
+
+
+![png](Ames_Housing_files/Ames_Housing_21_0.png)
+
+
+* The Parcel Number can be used to pin down the exact location of the house. 
+
+
+```
+df.PID = df.PID.astype(str) # Parcel Identification
 df['PID1']=df.PID.str[0:1] # township
 df['PID2']=df.PID.str[1:3] # section number
 df['PID3']=df.PID.str[3:6] # quarter section (N, E, S, W, etc)
@@ -283,9 +239,42 @@ df['PID4']=df.PID.str[6:10] # parcel number within section
 
 
 ```
-plot_categorical('PID2')
-regression_model('PID2')
+CatPlot('PID2')
 ```
+
+
+![png](Ames_Housing_files/Ames_Housing_24_0.png)
+
+
+
+```
+41502914308
+526301100
+```
+
+
+
+
+    526301100
+
+
+
+
+```
+df.PID.head()
+```
+
+
+
+
+    0    526301100
+    1    526350040
+    2    526351010
+    3    526353030
+    4    527105010
+    Name: PID, dtype: object
+
+
 
 
 ```
@@ -353,11 +342,11 @@ regression_model('SaleCondition')
 
 
 
-![png](Ames_Housing_files/Ames_Housing_26_1.png)
+![png](Ames_Housing_files/Ames_Housing_35_1.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_26_2.png)
+![png](Ames_Housing_files/Ames_Housing_35_2.png)
 
 
 
@@ -370,11 +359,11 @@ regression_model('SaleType')
 
 
 
-![png](Ames_Housing_files/Ames_Housing_27_1.png)
+![png](Ames_Housing_files/Ames_Housing_36_1.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_27_2.png)
+![png](Ames_Housing_files/Ames_Housing_36_2.png)
 
 
 
@@ -387,11 +376,11 @@ regression_model('MoSold')
 
 
 
-![png](Ames_Housing_files/Ames_Housing_28_1.png)
+![png](Ames_Housing_files/Ames_Housing_37_1.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_28_2.png)
+![png](Ames_Housing_files/Ames_Housing_37_2.png)
 
 
 
@@ -404,11 +393,11 @@ regression_model('YrSold')
 
 
 
-![png](Ames_Housing_files/Ames_Housing_29_1.png)
+![png](Ames_Housing_files/Ames_Housing_38_1.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_29_2.png)
+![png](Ames_Housing_files/Ames_Housing_38_2.png)
 
 
 
@@ -422,11 +411,11 @@ regression_model('YrMoSold')
 
 
 
-![png](Ames_Housing_files/Ames_Housing_30_1.png)
+![png](Ames_Housing_files/Ames_Housing_39_1.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_30_2.png)
+![png](Ames_Housing_files/Ames_Housing_39_2.png)
 
 
 
@@ -674,7 +663,7 @@ sns.heatmap(df[['SalePrice']+ areaFeatures].corr(), annot=True, cmap = 'Blues')
 
 
 
-![png](Ames_Housing_files/Ames_Housing_35_1.png)
+![png](Ames_Housing_files/Ames_Housing_44_1.png)
 
 
 
@@ -721,23 +710,23 @@ regression_model2(areaFeatures)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_38_1.png)
+![png](Ames_Housing_files/Ames_Housing_47_1.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_38_2.png)
+![png](Ames_Housing_files/Ames_Housing_47_2.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_38_3.png)
+![png](Ames_Housing_files/Ames_Housing_47_3.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_38_4.png)
+![png](Ames_Housing_files/Ames_Housing_47_4.png)
 
 
 
-![png](Ames_Housing_files/Ames_Housing_38_5.png)
+![png](Ames_Housing_files/Ames_Housing_47_5.png)
 
 
 
