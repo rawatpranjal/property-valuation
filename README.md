@@ -775,7 +775,7 @@ CatPlot('PIN2')
 * Using Lat/Long co-ordinates for Sale location we can obtain clusters/hubs of Sale activity.
 * These clusters/hubs can be new geographical divisions and act as ordinal features
 
-
+<!-- 
 ```
 # Load Street Map
 #%pip install geopandas
@@ -831,7 +831,7 @@ scaler = StandardScaler()
 scaler.fit(X)
 X = scaler.transform(X)
 ```
-
+-->
 
 ```
 CatPlot('xy_kmeans16')
