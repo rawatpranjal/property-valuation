@@ -1,5 +1,5 @@
 
-# **Residential Property Valuation: The Case of Cook County, US**
+# **Introduction**
 
 
 Accurate property valuation is a common problem faced by every city government. It is a requirement for the collection of property tax and necessary for the development of an area. Poor valuation will give rise to illicit activities, under the table transactions and underutilization. 
