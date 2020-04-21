@@ -594,6 +594,7 @@ df = df.merge(pd.read_csv(PATH + 'townships.csv'), left_on = 'TownCode', right_o
 
 *NNReg* Function - Neural Net Regression between LogSalePrice and Selected Variables.
 
+<!-- 
 
 ```
 import seaborn as sns
@@ -673,6 +674,7 @@ def NNReg(var, H = (100, ), N = 200, α = 0.01, L1 = 2, plot = False):
         plt.show()
     return model
 ```
+-->
 
 # **Transformation of Sale Price**
 
